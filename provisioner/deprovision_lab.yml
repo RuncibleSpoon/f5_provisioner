@@ -67,7 +67,6 @@
   gather_facts: no
   roles:
     - webservers
-    - docker_hosts
 
 # Get Latest AS3 version and download 
 #- name: Latest AS3 version download

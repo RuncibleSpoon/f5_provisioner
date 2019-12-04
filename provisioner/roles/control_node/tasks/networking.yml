@@ -92,3 +92,21 @@
     dest: "/etc/hosts"
     owner: "{{ username }}"
     group: "{{ username }}"
+
+- name: create AS3 directory     
+  file:
+    state: directory
+    path: /home/{{ username }}/networking-workshop/AS3
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+- name: copy AS3 declarations to host
+  copy: 
+    src: "{{item}}"
+    dest: /home/{{ username }}/networking-workshop/AS3
+    owner: "{{ username }}"
+    group: "{{ username }}"
+  with_fileglob: 
+     - "{{ playbook_dir }}/AS3/*"
+
+
