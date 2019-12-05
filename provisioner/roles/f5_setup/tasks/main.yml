@@ -39,7 +39,7 @@
     provider: "{{provider_info}}"
 
 # Need to touch /var/config/rest/iapps/enable in BIG-IP <v14
-- name Enable AS3
+- name: Enable AS3
   copy:
     content: ""
     dest: /var/config/rest/iapps/enable 
