@@ -24,6 +24,11 @@
 - name: Wait for BIG-IP to boot up completely
   bigip_wait:
     provider: "{{provider_info}}"
+
+- name: Fetch AS3 RPM
+  get_url: 
+    url: "{{AS3_URL}}"
+    dest: "{{ playbook_dir }}/roles/f5_setup/files/as3.rpm"  
     
 - name: Grab the AS3 version from the files directory
   shell: ls -Art {{ playbook_dir }}/roles/f5_setup/files/*.rpm | tail -n 1 | rev | cut -d/ -f 1 | rev
@@ -39,6 +44,12 @@
     provider: "{{provider_info}}"
 
 # Need to touch /var/config/rest/iapps/enable in BIG-IP <v14
+- name: Create AS3 enabling directory 
+  file:
+    path: /var/config/rest/iapps/
+    state: directory
+
+
 - name: Enable AS3
   copy:
     content: ""
@@ -47,4 +58,14 @@
     group: sys
     owner: root
     mode: 0555
+
+- name: provision ILX
+  bigip_provision:
+    module: ilx
+    provider:
+      ssh_keyfile: "{{playbook_dir}}/{{ec2_name_prefix}}/{{ec2_name_prefix}}-private.pem"
+      transport: cli
+      user: admin
+      server: "{{ ansible_host }}"
+      
 

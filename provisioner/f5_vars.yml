@@ -9,6 +9,9 @@ student_total: 1
 ## Optional Variables
 # password used for student account on control node
 admin_password: ansible
+# AS3 RPM loation
+AS3_URL:  https://github.com/F5Networks/f5-appsvcs-extension/releases/download/v3.16.0/f5-appsvcs-3.16.0-6.noarch.rpm
+
 
 # DO NOT CHANGE
 # workshop runs in F5 mode
