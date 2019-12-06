@@ -1,0 +1,31 @@
+             "A1": {
+                 "class": "Application",
+                 "template": "http",
+                 "serviceMain": {
+                     "class": "Service_HTTP",
+                     "virtualAddresses": [
+                         "{{private_ip}}"
+                     ],
+
+                     "pool": "juice_pool"
+                 },
+                 "juice_pool": {
+                     "class": "Pool",
+                     "monitors": [
+                         "http"
+                     ],
+                     "members": [
+                         {
+                             "servicePort": 3000,
+                             "serverAddresses": [
+                                  {% set comma = joiner(",") %}
+                                  {% for mem in pool_members %}
+                                      {{comma()}} "{{  hostvars[mem]['private_ip']  }}"
+                                   {% endfor %}
+                              ]
+
+                         }
+			 
+                     ]
+                 }
+             }
