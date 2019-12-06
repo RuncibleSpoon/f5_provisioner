@@ -1,0 +1,42 @@
+             "A1": {
+                 "class": "Application",
+                 "template": "http",
+                 "serviceMain": {
+                     "class": "Service_HTTP",
+                     "virtualAddresses": [
+                         "{{private_ip}}"
+                     ],
+                     "pool": "web_pool"
+                 },
+                 "web_pool": {
+                     "class": "Pool",
+		     "loadBalancingMode":"ratio-member",
+                     "monitors": [
+                         "http"
+                     ],
+                     "members": [
+                         {
+                             "servicePort": 9080,
+			                 "ratio": 90,
+                             "serverAddresses": [
+																 {% set comma = joiner(",") %}
+                                 {% for mem in pool_members %}
+                                      {{comma()}} "{{  hostvars[mem]['private_ip']  }}"
+                                 {% endfor %}
+                                               ]
+                         },
+                         {
+                             "servicePort": 9081,
+			                 "ratio": 10,
+                             "serverAddresses": [
+														    {% set comma = joiner(",") %}
+                                {% for mem in pool_members %}
+                                      {{comma()}} "{{  hostvars[mem]['private_ip']  }}"
+                                {% endfor %}
+                                               ]
+
+                         }
+			 
+                     ]
+                 }
+             }
