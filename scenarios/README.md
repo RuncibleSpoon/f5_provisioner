@@ -7,9 +7,10 @@ The [OWASP Juicebox App](https://www.owasp.org/index.php/OWASP_Juice_Shop_Projec
 
 For this test scenario you can first configure the BIG-IP to proxy traffic to the container running on port 3000 on the app server, then check out a simple hack, then configure BIG-IP to protect the application, and run the test again. 
 
-First, run the [AS3](http://clouddocs.f5.com/products/extensions/f5-appsvcs-extension/latest/) declaration using the juiceshop playbook in the AS3 directory 
+First, run the [AS3](http://clouddocs.f5.com/products/extensions/f5-appsvcs-extension/latest/) declaration using the as3.py script:
 
-`ansible-playbook juiceshop.yml`
+`$python ~/F5AppSvcDemo/as3.py juiceshop.json`
+
 
 Now navigate to the juiceshop app
 
@@ -30,7 +31,7 @@ Suddenly we've unlocked a challenge and are logged in as admin (user id 1).
 Of course we should go and fix the code, but maybe spending 30 seconds to protect the app while we do it makes sense?
 
 
-`ansible-playbook protect_juiceshop.yml`
+`$ python ~/F5AppSvcDemo/as3.py protect_juiceshop.json`
 
 Let's try that again
 
